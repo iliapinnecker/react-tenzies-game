@@ -1,5 +1,6 @@
 import Die from "./Die"
 import RollCounter from "./RollCounter"
+import PreviousRollCount from "./previousRollCount"
 import React from "react"
 import {nanoid} from "nanoid"
 import Confetti from "react-confetti"
@@ -10,6 +11,7 @@ import Confetti from "react-confetti"
 function App() {
 
     const [count, setCount] = React.useState(0)
+    const [prevCount, setPrevCount] = React.useState("")
     const [dice, setDice] = React.useState(allNewDice())
     const [tenzies, setTenzies] = React.useState(false)
 
@@ -77,6 +79,7 @@ function App() {
         else {
             setTenzies(false)
             setDice(allNewDice())
+            setPrevCount(count)
             setCount(0)
         }
     }
@@ -89,19 +92,22 @@ function App() {
     ))
 
     return (
-        <main>
+        <div>
             {tenzies && <Confetti />}
-            <h1 className="title">Tenzies</h1>
-            <p className="instructions">Roll until all dice are the same.
-            Click each die to freeze it at its current value between rolls.</p>
-            <div className="die-container">
-                {diceElements}
-            </div>
-            <button className="roll-btn" onClick={rollDice}>
-                {tenzies === true ? "New Game" : "Roll Dice"}
-            </button>
-            <RollCounter count={count} />
-        </main>
+            <main>
+                <h1 className="title">Tenzies</h1>
+                <p className="instructions">Roll until all dice are the same.
+                Click each die to freeze it at its current value between rolls.</p>
+                <div className="die-container">
+                    {diceElements}
+                </div>
+                <button className="roll-btn" onClick={rollDice}>
+                    {tenzies === true ? "New Game" : "Roll Dice"}
+                </button>
+                <RollCounter count={count} />
+                <PreviousRollCount prevCount={prevCount}/>
+            </main>
+        </div>
     )
 }
 

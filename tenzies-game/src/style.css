@@ -24,6 +24,13 @@ main {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    position: relative;
+}
+
+.prev-roll-count {
+    position: absolute;
+    left: 20px;
+    bottom: 70px;
 }
 
 .title {
