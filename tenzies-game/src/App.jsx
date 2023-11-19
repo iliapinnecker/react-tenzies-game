@@ -1,4 +1,5 @@
 import Die from "./Die"
+import RollCounter from "./RollCounter"
 import React from "react"
 import {nanoid} from "nanoid"
 import Confetti from "react-confetti"
@@ -8,6 +9,7 @@ import Confetti from "react-confetti"
  */
 function App() {
 
+    const [count, setCount] = React.useState(0)
     const [dice, setDice] = React.useState(allNewDice())
     const [tenzies, setTenzies] = React.useState(false)
 
@@ -65,6 +67,7 @@ function App() {
      */
     function rollDice() {
         if (!tenzies) {
+            setCount(count + 1)
             setDice(oldDice => oldDice.map(die => {
                 return die.isHeld ?
                     die :
@@ -74,6 +77,7 @@ function App() {
         else {
             setTenzies(false)
             setDice(allNewDice())
+            setCount(0)
         }
     }
 
@@ -96,6 +100,7 @@ function App() {
             <button className="roll-btn" onClick={rollDice}>
                 {tenzies === true ? "New Game" : "Roll Dice"}
             </button>
+            <RollCounter count={count} />
         </main>
     )
 }
